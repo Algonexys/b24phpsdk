@@ -128,5 +128,4 @@ class FollowUpSelectBuilder extends AbstractSelectBuilder
         $this->select[] = 'version';
         return $this;
     }
-
 }
