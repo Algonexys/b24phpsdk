@@ -2,6 +2,23 @@
 
 ## Unreleased
 
+### Added
+
+- Added service `Services\CRM\Userfieldconfig` with support methods,
+  see [userfieldconfig.* methods](https://apidocs.bitrix24.com/api-reference/crm/universal/userfieldconfig/index.html) ([#605](https://github.com/bitrix24/b24phpsdk/issues/605)):
+    - `add` adds a new custom field for a CRM smart-process type, the new invoice or the sign document entity
+    - `update` updates the settings of an existing custom field
+    - `get` returns the settings of a custom field by its identifier
+    - `list` returns a list of custom field settings matching the filter
+    - `delete` deletes a custom field
+    - `getTypes` returns the set of custom field types available for the specified module
+- Added support for events
+  see [userfieldconfig events](https://apidocs.bitrix24.com/api-reference/crm/universal/userfieldconfig/events/index.html) ([#605](https://github.com/bitrix24/b24phpsdk/issues/605)):
+    - `onCrmTypeUserFieldAdd`
+    - `onCrmTypeUserFieldUpdate`
+    - `onCrmTypeUserFieldDelete`
+    - `onCrmTypeUserFieldSetEnumValues`
+
 ## 3.5.0
 
 ### Added
