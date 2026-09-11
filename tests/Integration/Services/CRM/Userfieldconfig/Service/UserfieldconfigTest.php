@@ -36,9 +36,11 @@ class UserfieldconfigTest extends TestCase
         $this->userfieldConfigService = Factory::getServiceBuilder()->getCRMScope()->userfieldConfig();
         $this->typeService = Factory::getServiceBuilder()->getCRMScope()->type();
 
+        // entityId for userfieldconfig is CRM_{id} built from the SPA type's own `id`,
+        // not from `entityTypeId` (see docs for onCrmTypeUserFieldAdd, section "ENTITY_ID")
         $addedType = $this->typeService->add(sprintf('%s userfieldconfig test SPA type', time()));
         $this->scratchTypeId = $addedType->getId();
-        $this->entityId = sprintf('CRM_%d', $addedType->type()->entityTypeId);
+        $this->entityId = sprintf('CRM_%d', $this->scratchTypeId);
     }
 
     #[\Override]
@@ -71,12 +73,9 @@ class UserfieldconfigTest extends TestCase
             'userTypeId' => 'string',
         ]);
 
-        $this->assertTrue(
-            $this->userfieldConfigService->update('crm', $added->field()->id, ['mandatory' => 'Y'])->isSuccess()
-        );
-
-        $updated = $this->userfieldConfigService->get('crm', $added->field()->id);
+        $updated = $this->userfieldConfigService->update('crm', $added->field()->id, ['mandatory' => 'Y']);
         $this->assertTrue($updated->field()->mandatory);
+        $this->assertEquals($added->field()->id, $updated->field()->id);
     }
 
     public function testGet(): void
@@ -102,7 +101,7 @@ class UserfieldconfigTest extends TestCase
             'userTypeId' => 'string',
         ]);
 
-        $items = $this->userfieldConfigService->list('crm', [], [], ['entityId' => $this->entityId])->getUserfieldConfigs();
+        $items = $this->userfieldConfigService->list('crm', ['*'], [], ['entityId' => $this->entityId])->getUserfieldConfigs();
         $this->assertNotEmpty($items);
         $this->assertEquals($fieldName, $items[0]->fieldName);
         $this->assertEquals($added->field()->id, $items[0]->id);

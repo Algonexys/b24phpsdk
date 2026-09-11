@@ -18,10 +18,10 @@ use Bitrix24\SDK\Attributes\ApiServiceMetadata;
 use Bitrix24\SDK\Core\Credentials\Scope;
 use Bitrix24\SDK\Core\Exceptions\BaseException;
 use Bitrix24\SDK\Core\Exceptions\TransportException;
-use Bitrix24\SDK\Core\Result\UpdatedItemResult;
 use Bitrix24\SDK\Services\AbstractService;
 use Bitrix24\SDK\Services\CRM\Userfieldconfig\Result\AddedUserfieldConfigItemResult;
 use Bitrix24\SDK\Services\CRM\Userfieldconfig\Result\DeletedUserfieldConfigItemResult;
+use Bitrix24\SDK\Services\CRM\Userfieldconfig\Result\UpdatedUserfieldConfigItemResult;
 use Bitrix24\SDK\Services\CRM\Userfieldconfig\Result\UserfieldConfigResult;
 use Bitrix24\SDK\Services\CRM\Userfieldconfig\Result\UserfieldConfigsResult;
 use Bitrix24\SDK\Services\CRM\Userfieldconfig\Result\UserfieldConfigTypesResult;
@@ -72,9 +72,9 @@ class Userfieldconfig extends AbstractService
         'https://apidocs.bitrix24.com/api-reference/crm/universal/userfieldconfig/userfieldconfig-update.html',
         'Updates the settings of an existing custom field.'
     )]
-    public function update(string $moduleId, int $id, array $field): UpdatedItemResult
+    public function update(string $moduleId, int $id, array $field): UpdatedUserfieldConfigItemResult
     {
-        return new UpdatedItemResult(
+        return new UpdatedUserfieldConfigItemResult(
             $this->core->call('userfieldconfig.update', [
                 'moduleId' => $moduleId,
                 'id' => $id,
@@ -115,7 +115,8 @@ class Userfieldconfig extends AbstractService
      * @link https://apidocs.bitrix24.com/api-reference/crm/universal/userfieldconfig/userfieldconfig-list.html
      *
      * @param non-empty-string $moduleId
-     * @param array $select
+     * @param array $select defaults to `['*']` because the API returns only a minimal,
+     *              largely useless field set (e.g. `{"1":"1","settings":null}`) when select is empty
      * @param array $order
      * @param array $filter
      * @param int $start
@@ -128,7 +129,7 @@ class Userfieldconfig extends AbstractService
         'https://apidocs.bitrix24.com/api-reference/crm/universal/userfieldconfig/userfieldconfig-list.html',
         'Returns a list of custom field settings matching the filter.'
     )]
-    public function list(string $moduleId, array $select = [], array $order = [], array $filter = [], int $start = 0): UserfieldConfigsResult
+    public function list(string $moduleId, array $select = ['*'], array $order = [], array $filter = [], int $start = 0): UserfieldConfigsResult
     {
         return new UserfieldConfigsResult(
             $this->core->call('userfieldconfig.list', [

@@ -42,9 +42,11 @@ class UserfieldConfigItemResultTest extends TestCase
         $this->userfieldConfigService = Factory::getServiceBuilder()->getCRMScope()->userfieldConfig();
         $this->typeService = Factory::getServiceBuilder()->getCRMScope()->type();
 
+        // entityId for userfieldconfig is CRM_{id} built from the SPA type's own `id`,
+        // not from `entityTypeId` (see docs for onCrmTypeUserFieldAdd, section "ENTITY_ID")
         $addedType = $this->typeService->add(sprintf('%s userfieldconfig annotations test SPA type', time()));
         $this->scratchTypeId = $addedType->getId();
-        $entityId = sprintf('CRM_%d', $addedType->type()->entityTypeId);
+        $entityId = sprintf('CRM_%d', $this->scratchTypeId);
 
         // uses userTypeId "enumeration" with a non-empty `enum` list so that the raw API
         // response includes the `enum` key, matching the class annotation below

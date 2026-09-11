@@ -6,9 +6,9 @@ namespace Bitrix24\SDK\Tests\Unit\Services\CRM\Userfieldconfig\Service;
 
 use Bitrix24\SDK\Core\Contracts\CoreInterface;
 use Bitrix24\SDK\Core\Response\Response;
-use Bitrix24\SDK\Core\Result\UpdatedItemResult;
 use Bitrix24\SDK\Services\CRM\Userfieldconfig\Result\AddedUserfieldConfigItemResult;
 use Bitrix24\SDK\Services\CRM\Userfieldconfig\Result\DeletedUserfieldConfigItemResult;
+use Bitrix24\SDK\Services\CRM\Userfieldconfig\Result\UpdatedUserfieldConfigItemResult;
 use Bitrix24\SDK\Services\CRM\Userfieldconfig\Result\UserfieldConfigResult;
 use Bitrix24\SDK\Services\CRM\Userfieldconfig\Result\UserfieldConfigsResult;
 use Bitrix24\SDK\Services\CRM\Userfieldconfig\Result\UserfieldConfigTypesResult;
@@ -46,7 +46,7 @@ class UserfieldconfigTest extends TestCase
         ]);
 
         self::assertInstanceOf(
-            UpdatedItemResult::class,
+            UpdatedUserfieldConfigItemResult::class,
             $this->makeService($core)->update('crm', 7095, ['mandatory' => 'Y'])
         );
     }
@@ -75,6 +75,19 @@ class UserfieldconfigTest extends TestCase
             UserfieldConfigsResult::class,
             $this->makeService($core)->list('crm', ['*'], ['id' => 'DESC'], ['multiple' => 'Y'])
         );
+    }
+
+    public function testListDefaultsToWildcardSelect(): void
+    {
+        $core = $this->mockCore('userfieldconfig.list', [
+            'moduleId' => 'crm',
+            'select' => ['*'],
+            'order' => [],
+            'filter' => [],
+            'start' => 0,
+        ]);
+
+        self::assertInstanceOf(UserfieldConfigsResult::class, $this->makeService($core)->list('crm'));
     }
 
     public function testDeleteBuildsParameters(): void
