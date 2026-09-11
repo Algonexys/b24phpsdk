@@ -12,7 +12,9 @@ use Bitrix24\SDK\Services\CRM\Userfieldconfig\Result\UpdatedUserfieldConfigItemR
 use Bitrix24\SDK\Services\CRM\Userfieldconfig\Result\UserfieldConfigResult;
 use Bitrix24\SDK\Services\CRM\Userfieldconfig\Result\UserfieldConfigsResult;
 use Bitrix24\SDK\Services\CRM\Userfieldconfig\Result\UserfieldConfigTypesResult;
+use Bitrix24\SDK\Services\CRM\Userfieldconfig\Service\Batch;
 use Bitrix24\SDK\Services\CRM\Userfieldconfig\Service\Userfieldconfig;
+use Bitrix24\SDK\Services\CRM\Userfieldconfig\Batch as UserfieldconfigBatch;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
@@ -111,7 +113,7 @@ class UserfieldconfigTest extends TestCase
 
     private function makeService(CoreInterface $core): Userfieldconfig
     {
-        return new Userfieldconfig($core, new NullLogger());
+        return new Userfieldconfig(new Batch(new UserfieldconfigBatch($core, new NullLogger()), new NullLogger()), $core, new NullLogger());
     }
 
     private function mockCore(string $method, array $parameters): CoreInterface

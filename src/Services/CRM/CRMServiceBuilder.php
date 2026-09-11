@@ -723,7 +723,12 @@ class CRMServiceBuilder extends AbstractServiceBuilder
     public function userfieldConfig(): Userfieldconfig\Service\Userfieldconfig
     {
         if (!isset($this->serviceCache[__METHOD__])) {
+            $batch = new Userfieldconfig\Batch(
+                $this->core,
+                $this->log
+            );
             $this->serviceCache[__METHOD__] = new Userfieldconfig\Service\Userfieldconfig(
+                new Userfieldconfig\Service\Batch($batch, $this->log),
                 $this->core,
                 $this->log
             );
