@@ -73,7 +73,7 @@ class UserfieldconfigTest extends TestCase
             'userTypeId' => 'string',
         ]);
 
-        $updatedUserfieldConfigItemResult = $this->userfieldConfigService->update('crm', $addedUserfieldConfigItemResult->field()->id, ['mandatory' => 'Y']);
+        $updatedUserfieldConfigItemResult = $this->userfieldConfigService->update('crm', (int)$addedUserfieldConfigItemResult->field()->id, ['mandatory' => 'Y']);
         $this->assertTrue($updatedUserfieldConfigItemResult->field()->mandatory);
         $this->assertEquals($addedUserfieldConfigItemResult->field()->id, $updatedUserfieldConfigItemResult->field()->id);
     }
@@ -87,7 +87,7 @@ class UserfieldconfigTest extends TestCase
             'userTypeId' => 'string',
         ]);
 
-        $userfieldConfigResult = $this->userfieldConfigService->get('crm', $addedUserfieldConfigItemResult->field()->id);
+        $userfieldConfigResult = $this->userfieldConfigService->get('crm', (int)$addedUserfieldConfigItemResult->field()->id);
         $this->assertEquals($fieldName, $userfieldConfigResult->field()?->fieldName);
         $this->assertEquals($addedUserfieldConfigItemResult->field()->id, $userfieldConfigResult->field()?->id);
     }
@@ -116,7 +116,7 @@ class UserfieldconfigTest extends TestCase
             'userTypeId' => 'string',
         ]);
 
-        $this->assertTrue($this->userfieldConfigService->delete('crm', $addedUserfieldConfigItemResult->field()->id)->isSuccess());
+        $this->assertTrue($this->userfieldConfigService->delete('crm', (int)$addedUserfieldConfigItemResult->field()->id)->isSuccess());
     }
 
     public function testGetTypes(): void

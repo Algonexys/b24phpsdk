@@ -35,6 +35,6 @@ class AddedUserfieldConfigItemBatchResult implements AddedItemIdResultInterface
     #[\Override]
     public function getId(): int
     {
-        return $this->field()->id;
+        return (int)$this->field()->id;
     }
 }

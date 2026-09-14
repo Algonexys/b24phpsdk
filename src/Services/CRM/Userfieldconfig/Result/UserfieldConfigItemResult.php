@@ -39,4 +39,17 @@ use Bitrix24\SDK\Core\Result\AbstractItem;
  */
 class UserfieldConfigItemResult extends AbstractItem
 {
+    /**
+     * @param int|string $offset
+     *
+     * @return mixed
+     */
+    #[\Override]
+    public function __get($offset)
+    {
+        return match ($offset) {
+            'multiple', 'mandatory', 'showInList', 'editInList', 'isSearchable' => $this->data[$offset] === 'Y',
+            default => parent::__get($offset),
+        };
+    }
 }

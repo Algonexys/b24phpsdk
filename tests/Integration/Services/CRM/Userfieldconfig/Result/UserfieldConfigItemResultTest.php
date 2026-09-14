@@ -59,7 +59,7 @@ class UserfieldConfigItemResultTest extends TestCase
                 ['value' => 'B', 'def' => 'Y', 'sort' => 200],
             ],
         ]);
-        $this->scratchFieldId = $addedUserfieldConfigItemResult->field()->id;
+        $this->scratchFieldId = (int)$addedUserfieldConfigItemResult->field()->id;
     }
 
     #[\Override]
