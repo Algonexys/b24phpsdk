@@ -42,7 +42,6 @@ class Userfieldconfig extends AbstractService
      * @link https://apidocs.bitrix24.com/api-reference/crm/universal/userfieldconfig/userfieldconfig-add.html
      *
      * @param non-empty-string $moduleId
-     * @param array $field
      *
      * @throws BaseException
      * @throws TransportException
@@ -69,7 +68,6 @@ class Userfieldconfig extends AbstractService
      *
      * @param non-empty-string $moduleId
      * @param positive-int $id
-     * @param array $field
      *
      * @throws BaseException
      * @throws TransportException
@@ -124,9 +122,6 @@ class Userfieldconfig extends AbstractService
      * @param non-empty-string $moduleId
      * @param array $select defaults to `['*']` because the API returns only a minimal,
      *              largely useless field set (e.g. `{"1":"1","settings":null}`) when select is empty
-     * @param array $order
-     * @param array $filter
-     * @param int $start
      *
      * @throws BaseException
      * @throws TransportException

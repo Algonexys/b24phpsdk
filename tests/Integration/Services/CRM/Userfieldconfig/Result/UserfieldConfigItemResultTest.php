@@ -44,13 +44,13 @@ class UserfieldConfigItemResultTest extends TestCase
 
         // entityId for userfieldconfig is CRM_{id} built from the SPA type's own `id`,
         // not from `entityTypeId` (see docs for onCrmTypeUserFieldAdd, section "ENTITY_ID")
-        $addedType = $this->typeService->add(sprintf('%s userfieldconfig annotations test SPA type', time()));
-        $this->scratchTypeId = $addedType->getId();
+        $addedTypeItemResult = $this->typeService->add(sprintf('%s userfieldconfig annotations test SPA type', time()));
+        $this->scratchTypeId = $addedTypeItemResult->getId();
         $entityId = sprintf('CRM_%d', $this->scratchTypeId);
 
         // uses userTypeId "enumeration" with a non-empty `enum` list so that the raw API
         // response includes the `enum` key, matching the class annotation below
-        $added = $this->userfieldConfigService->add('crm', [
+        $addedUserfieldConfigItemResult = $this->userfieldConfigService->add('crm', [
             'entityId' => $entityId,
             'fieldName' => sprintf('UF_%s_%d', $entityId, time()),
             'userTypeId' => 'enumeration',
@@ -59,7 +59,7 @@ class UserfieldConfigItemResultTest extends TestCase
                 ['value' => 'B', 'def' => 'Y', 'sort' => 200],
             ],
         ]);
-        $this->scratchFieldId = $added->field()->id;
+        $this->scratchFieldId = $addedUserfieldConfigItemResult->field()->id;
     }
 
     #[\Override]

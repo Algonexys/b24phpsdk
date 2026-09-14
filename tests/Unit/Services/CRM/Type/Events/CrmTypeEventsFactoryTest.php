@@ -55,10 +55,10 @@ class CrmTypeEventsFactoryTest extends TestCase
         self::assertInstanceOf(OnCrmTypeUserFieldAdd::class, $event);
         self::assertSame(OnCrmTypeUserFieldAdd::CODE, $event->getEventCode());
 
-        $payload = $event->getPayload();
-        self::assertSame('6977', $payload->id);
-        self::assertSame('CRM_13', $payload->entityId);
-        self::assertSame('UF_CRM_13_1742999523', $payload->fieldName);
+        $onCrmTypeUserFieldAddPayload = $event->getPayload();
+        self::assertSame('6977', $onCrmTypeUserFieldAddPayload->id);
+        self::assertSame('CRM_13', $onCrmTypeUserFieldAddPayload->entityId);
+        self::assertSame('UF_CRM_13_1742999523', $onCrmTypeUserFieldAddPayload->fieldName);
     }
 
     #[Test]
@@ -70,10 +70,10 @@ class CrmTypeEventsFactoryTest extends TestCase
         self::assertInstanceOf(OnCrmTypeUserFieldUpdate::class, $event);
         self::assertSame(OnCrmTypeUserFieldUpdate::CODE, $event->getEventCode());
 
-        $payload = $event->getPayload();
-        self::assertSame('6977', $payload->id);
-        self::assertSame('CRM_13', $payload->entityId);
-        self::assertSame('UF_CRM_13_1742999523', $payload->fieldName);
+        $onCrmTypeUserFieldUpdatePayload = $event->getPayload();
+        self::assertSame('6977', $onCrmTypeUserFieldUpdatePayload->id);
+        self::assertSame('CRM_13', $onCrmTypeUserFieldUpdatePayload->entityId);
+        self::assertSame('UF_CRM_13_1742999523', $onCrmTypeUserFieldUpdatePayload->fieldName);
     }
 
     #[Test]
@@ -85,10 +85,10 @@ class CrmTypeEventsFactoryTest extends TestCase
         self::assertInstanceOf(OnCrmTypeUserFieldDelete::class, $event);
         self::assertSame(OnCrmTypeUserFieldDelete::CODE, $event->getEventCode());
 
-        $payload = $event->getPayload();
-        self::assertSame('6977', $payload->id);
-        self::assertSame('CRM_13', $payload->entityId);
-        self::assertSame('UF_CRM_13_1742999523', $payload->fieldName);
+        $onCrmTypeUserFieldDeletePayload = $event->getPayload();
+        self::assertSame('6977', $onCrmTypeUserFieldDeletePayload->id);
+        self::assertSame('CRM_13', $onCrmTypeUserFieldDeletePayload->entityId);
+        self::assertSame('UF_CRM_13_1742999523', $onCrmTypeUserFieldDeletePayload->fieldName);
     }
 
     #[Test]
@@ -100,10 +100,10 @@ class CrmTypeEventsFactoryTest extends TestCase
         self::assertInstanceOf(OnCrmTypeUserFieldSetEnumValues::class, $event);
         self::assertSame(OnCrmTypeUserFieldSetEnumValues::CODE, $event->getEventCode());
 
-        $payload = $event->getPayload();
-        self::assertSame('6977', $payload->id);
-        self::assertSame('CRM_13', $payload->entityId);
-        self::assertSame('UF_CRM_13_1742999523', $payload->fieldName);
+        $onCrmTypeUserFieldSetEnumValuesPayload = $event->getPayload();
+        self::assertSame('6977', $onCrmTypeUserFieldSetEnumValuesPayload->id);
+        self::assertSame('CRM_13', $onCrmTypeUserFieldSetEnumValuesPayload->entityId);
+        self::assertSame('UF_CRM_13_1742999523', $onCrmTypeUserFieldSetEnumValuesPayload->fieldName);
     }
 
     #[Test]
@@ -140,7 +140,10 @@ class CrmTypeEventsFactoryTest extends TestCase
             ],
         ];
 
-        $request = new Request([], $payload, [], [], [], [], '');
+        $rawRequest = http_build_query($payload);
+        parse_str($rawRequest, $requestContent);
+
+        $request = new Request([], $requestContent, [], [], [], [], $rawRequest);
         $request->setMethod('POST');
 
         return $request;

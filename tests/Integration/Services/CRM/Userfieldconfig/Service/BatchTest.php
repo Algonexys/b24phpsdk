@@ -41,8 +41,8 @@ class BatchTest extends TestCase
 
         // entityId for userfieldconfig is CRM_{id} built from the SPA type's own `id`,
         // not from `entityTypeId` (see docs for onCrmTypeUserFieldAdd, section "ENTITY_ID")
-        $addedType = $this->typeService->add(sprintf('%s userfieldconfig batch test SPA type', time()));
-        $this->scratchTypeId = $addedType->getId();
+        $addedTypeItemResult = $this->typeService->add(sprintf('%s userfieldconfig batch test SPA type', time()));
+        $this->scratchTypeId = $addedTypeItemResult->getId();
         $this->entityId = sprintf('CRM_%d', $this->scratchTypeId);
     }
 

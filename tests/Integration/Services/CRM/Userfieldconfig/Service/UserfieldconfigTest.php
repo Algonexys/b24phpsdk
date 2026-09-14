@@ -38,8 +38,8 @@ class UserfieldconfigTest extends TestCase
 
         // entityId for userfieldconfig is CRM_{id} built from the SPA type's own `id`,
         // not from `entityTypeId` (see docs for onCrmTypeUserFieldAdd, section "ENTITY_ID")
-        $addedType = $this->typeService->add(sprintf('%s userfieldconfig test SPA type', time()));
-        $this->scratchTypeId = $addedType->getId();
+        $addedTypeItemResult = $this->typeService->add(sprintf('%s userfieldconfig test SPA type', time()));
+        $this->scratchTypeId = $addedTypeItemResult->getId();
         $this->entityId = sprintf('CRM_%d', $this->scratchTypeId);
     }
 
@@ -53,49 +53,49 @@ class UserfieldconfigTest extends TestCase
     public function testAdd(): void
     {
         $fieldName = sprintf('UF_%s_%d', $this->entityId, time());
-        $result = $this->userfieldConfigService->add('crm', [
+        $addedUserfieldConfigItemResult = $this->userfieldConfigService->add('crm', [
             'entityId' => $this->entityId,
             'fieldName' => $fieldName,
             'userTypeId' => 'string',
         ]);
 
-        $this->assertEquals($fieldName, $result->field()->fieldName);
-        $this->assertEquals($this->entityId, $result->field()->entityId);
-        $this->assertEquals('string', $result->field()->userTypeId);
+        $this->assertEquals($fieldName, $addedUserfieldConfigItemResult->field()->fieldName);
+        $this->assertEquals($this->entityId, $addedUserfieldConfigItemResult->field()->entityId);
+        $this->assertEquals('string', $addedUserfieldConfigItemResult->field()->userTypeId);
     }
 
     public function testUpdate(): void
     {
         $fieldName = sprintf('UF_%s_%d', $this->entityId, time());
-        $added = $this->userfieldConfigService->add('crm', [
+        $addedUserfieldConfigItemResult = $this->userfieldConfigService->add('crm', [
             'entityId' => $this->entityId,
             'fieldName' => $fieldName,
             'userTypeId' => 'string',
         ]);
 
-        $updated = $this->userfieldConfigService->update('crm', $added->field()->id, ['mandatory' => 'Y']);
-        $this->assertTrue($updated->field()->mandatory);
-        $this->assertEquals($added->field()->id, $updated->field()->id);
+        $updatedUserfieldConfigItemResult = $this->userfieldConfigService->update('crm', $addedUserfieldConfigItemResult->field()->id, ['mandatory' => 'Y']);
+        $this->assertTrue($updatedUserfieldConfigItemResult->field()->mandatory);
+        $this->assertEquals($addedUserfieldConfigItemResult->field()->id, $updatedUserfieldConfigItemResult->field()->id);
     }
 
     public function testGet(): void
     {
         $fieldName = sprintf('UF_%s_%d', $this->entityId, time());
-        $added = $this->userfieldConfigService->add('crm', [
+        $addedUserfieldConfigItemResult = $this->userfieldConfigService->add('crm', [
             'entityId' => $this->entityId,
             'fieldName' => $fieldName,
             'userTypeId' => 'string',
         ]);
 
-        $result = $this->userfieldConfigService->get('crm', $added->field()->id);
-        $this->assertEquals($fieldName, $result->field()?->fieldName);
-        $this->assertEquals($added->field()->id, $result->field()?->id);
+        $userfieldConfigResult = $this->userfieldConfigService->get('crm', $addedUserfieldConfigItemResult->field()->id);
+        $this->assertEquals($fieldName, $userfieldConfigResult->field()?->fieldName);
+        $this->assertEquals($addedUserfieldConfigItemResult->field()->id, $userfieldConfigResult->field()?->id);
     }
 
     public function testList(): void
     {
         $fieldName = sprintf('UF_%s_%d', $this->entityId, time());
-        $added = $this->userfieldConfigService->add('crm', [
+        $addedUserfieldConfigItemResult = $this->userfieldConfigService->add('crm', [
             'entityId' => $this->entityId,
             'fieldName' => $fieldName,
             'userTypeId' => 'string',
@@ -104,19 +104,19 @@ class UserfieldconfigTest extends TestCase
         $items = $this->userfieldConfigService->list('crm', ['*'], [], ['entityId' => $this->entityId])->getUserfieldConfigs();
         $this->assertNotEmpty($items);
         $this->assertEquals($fieldName, $items[0]->fieldName);
-        $this->assertEquals($added->field()->id, $items[0]->id);
+        $this->assertEquals($addedUserfieldConfigItemResult->field()->id, $items[0]->id);
     }
 
     public function testDelete(): void
     {
         $fieldName = sprintf('UF_%s_%d', $this->entityId, time());
-        $added = $this->userfieldConfigService->add('crm', [
+        $addedUserfieldConfigItemResult = $this->userfieldConfigService->add('crm', [
             'entityId' => $this->entityId,
             'fieldName' => $fieldName,
             'userTypeId' => 'string',
         ]);
 
-        $this->assertTrue($this->userfieldConfigService->delete('crm', $added->field()->id)->isSuccess());
+        $this->assertTrue($this->userfieldConfigService->delete('crm', $addedUserfieldConfigItemResult->field()->id)->isSuccess());
     }
 
     public function testGetTypes(): void
