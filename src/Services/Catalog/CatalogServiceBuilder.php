@@ -25,6 +25,10 @@ class CatalogServiceBuilder extends AbstractServiceBuilder
     {
         if (!isset($this->serviceCache[__METHOD__])) {
             $this->serviceCache[__METHOD__] = new Catalog\Catalog\Service\Catalog(
+                new Catalog\Catalog\Service\Batch(
+                    new Catalog\Catalog\Batch($this->core, $this->log),
+                    $this->log
+                ),
                 $this->core,
                 $this->log
             );
@@ -51,6 +55,10 @@ class CatalogServiceBuilder extends AbstractServiceBuilder
     {
         if (!isset($this->serviceCache[__METHOD__])) {
             $this->serviceCache[__METHOD__] = new Catalog\Product\ProductService\Service\ProductService(
+                new Catalog\Product\ProductService\Service\Batch(
+                    new Catalog\Product\ProductService\Batch($this->core, $this->log),
+                    $this->log
+                ),
                 $this->core,
                 $this->log
             );
@@ -63,6 +71,10 @@ class CatalogServiceBuilder extends AbstractServiceBuilder
     {
         if (!isset($this->serviceCache[__METHOD__])) {
             $this->serviceCache[__METHOD__] = new Catalog\Product\Sku\Service\Sku(
+                new Catalog\Product\Sku\Service\Batch(
+                    new Catalog\Product\Sku\Batch($this->core, $this->log),
+                    $this->log
+                ),
                 $this->core,
                 $this->log
             );
@@ -75,6 +87,10 @@ class CatalogServiceBuilder extends AbstractServiceBuilder
     {
         if (!isset($this->serviceCache[__METHOD__])) {
             $this->serviceCache[__METHOD__] = new Catalog\Product\Offer\Service\Offer(
+                new Catalog\Product\Offer\Service\Batch(
+                    new Catalog\Product\Offer\Batch($this->core, $this->log),
+                    $this->log
+                ),
                 $this->core,
                 $this->log
             );
@@ -115,6 +131,10 @@ class CatalogServiceBuilder extends AbstractServiceBuilder
     {
         if (!isset($this->serviceCache[__METHOD__])) {
             $this->serviceCache[__METHOD__] = new Catalog\Extra\Service\Extra(
+                new Catalog\Extra\Service\Batch(
+                    new Catalog\Extra\Batch($this->core, $this->log),
+                    $this->log
+                ),
                 $this->core,
                 $this->log
             );
@@ -141,6 +161,10 @@ class CatalogServiceBuilder extends AbstractServiceBuilder
     {
         if (!isset($this->serviceCache[__METHOD__])) {
             $this->serviceCache[__METHOD__] = new Catalog\Measure\Service\Measure(
+                new Catalog\Measure\Service\Batch(
+                    new Catalog\Measure\Batch($this->core, $this->log),
+                    $this->log
+                ),
                 $this->core,
                 $this->log
             );
@@ -251,6 +275,10 @@ class CatalogServiceBuilder extends AbstractServiceBuilder
     {
         if (!isset($this->serviceCache[__METHOD__])) {
             $this->serviceCache[__METHOD__] = new Catalog\ProductPropertySection\Service\ProductPropertySection(
+                new Catalog\ProductPropertySection\Service\Batch(
+                    new Catalog\ProductPropertySection\Batch($this->core, $this->log),
+                    $this->log
+                ),
                 $this->core,
                 $this->log
             );
