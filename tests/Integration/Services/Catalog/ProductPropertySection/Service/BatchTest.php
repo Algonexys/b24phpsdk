@@ -18,7 +18,7 @@ use Bitrix24\SDK\Core\Exceptions\TransportException;
 use Bitrix24\SDK\Services\Catalog\ProductPropertySection\Result\ProductPropertySectionItemResult;
 use Bitrix24\SDK\Services\Catalog\ProductPropertySection\Service\Batch;
 use Bitrix24\SDK\Services\Catalog\ProductPropertySection\Service\ProductPropertySection;
-use Bitrix24\SDK\Tests\Integration\Factory;
+use Bitrix24\SDK\Tests\Integration\Fabric;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
@@ -37,15 +37,15 @@ class BatchTest extends TestCase
     #[\Override]
     protected function setUp(): void
     {
-        $this->productPropertySectionService = Factory::getServiceBuilder()
+        $this->productPropertySectionService = Fabric::getServiceBuilder()
             ->getCatalogScope()
             ->productPropertySection();
 
-        $iblockId = Factory::getServiceBuilder()->getCatalogScope()->catalog()
+        $iblockId = Fabric::getServiceBuilder()->getCatalogScope()->catalog()
             ->list([], [], [], 0)->getCatalogs()[0]->iblockId;
 
         for ($i = 0; $i < 2; ++$i) {
-            $propertyAddResult = Factory::getCore()->call('catalog.productProperty.add', [
+            $propertyAddResult = Fabric::getCore()->call('catalog.productProperty.add', [
                 'fields' => [
                     'iblockId' => $iblockId,
                     'name' => sprintf('sdk batch property %s %s', $i, time()),
@@ -68,7 +68,7 @@ class BatchTest extends TestCase
     protected function tearDown(): void
     {
         foreach ($this->propertyIds as $propertyId) {
-            Factory::getCore()->call('catalog.productProperty.delete', ['id' => $propertyId]);
+            Fabric::getCore()->call('catalog.productProperty.delete', ['id' => $propertyId]);
         }
 
         $this->propertyIds = [];

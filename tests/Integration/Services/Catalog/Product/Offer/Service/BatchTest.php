@@ -20,7 +20,7 @@ use Bitrix24\SDK\Services\Catalog\Product\Offer\Result\OfferItemResult;
 use Bitrix24\SDK\Services\Catalog\Product\Offer\Service\Batch;
 use Bitrix24\SDK\Services\Catalog\Product\Offer\Service\Offer;
 use Bitrix24\SDK\Services\Catalog\Product\Sku\Service\Sku;
-use Bitrix24\SDK\Tests\Integration\Factory;
+use Bitrix24\SDK\Tests\Integration\Fabric;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
@@ -45,17 +45,17 @@ class BatchTest extends TestCase
     #[\Override]
     protected function setUp(): void
     {
-        $this->offerService = Factory::getServiceBuilder()->getCatalogScope()->productOffer();
-        $this->skuService = Factory::getServiceBuilder()->getCatalogScope()->productSku();
-        $this->catalogService = Factory::getServiceBuilder()->getCatalogScope()->catalog();
+        $this->offerService = Fabric::getServiceBuilder()->getCatalogScope()->productOffer();
+        $this->skuService = Fabric::getServiceBuilder()->getCatalogScope()->productSku();
+        $this->catalogService = Fabric::getServiceBuilder()->getCatalogScope()->catalog();
 
         $productCatalog = null;
         $offersCatalog = null;
-        foreach ($this->catalogService->list([], [], [], 0)->getCatalogs() as $catalog) {
-            if ($catalog->productIblockId === null) {
-                $productCatalog = $catalog;
+        foreach ($this->catalogService->list([], [], [], 0)->getCatalogs() as $catalogItemResult) {
+            if ($catalogItemResult->productIblockId === null) {
+                $productCatalog = $catalogItemResult;
             } else {
-                $offersCatalog = $catalog;
+                $offersCatalog = $catalogItemResult;
             }
         }
 

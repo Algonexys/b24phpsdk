@@ -18,7 +18,7 @@ use Bitrix24\SDK\Core\Exceptions\TransportException;
 use Bitrix24\SDK\Services\Catalog\Measure\Result\MeasureItemResult;
 use Bitrix24\SDK\Services\Catalog\Measure\Service\Batch;
 use Bitrix24\SDK\Services\Catalog\Measure\Service\Measure;
-use Bitrix24\SDK\Tests\Integration\Factory;
+use Bitrix24\SDK\Tests\Integration\Fabric;
 use Faker;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
@@ -36,7 +36,7 @@ class BatchTest extends TestCase
     #[\Override]
     protected function setUp(): void
     {
-        $this->measureService = Factory::getServiceBuilder()->getCatalogScope()->measure();
+        $this->measureService = Fabric::getServiceBuilder()->getCatalogScope()->measure();
         $this->faker = Faker\Factory::create();
     }
 

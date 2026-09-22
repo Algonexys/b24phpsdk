@@ -18,7 +18,7 @@ use Bitrix24\SDK\Core\Exceptions\TransportException;
 use Bitrix24\SDK\Services\Catalog\Extra\Result\ExtraItemResult;
 use Bitrix24\SDK\Services\Catalog\Extra\Service\Batch;
 use Bitrix24\SDK\Services\Catalog\Extra\Service\Extra;
-use Bitrix24\SDK\Tests\Integration\Factory;
+use Bitrix24\SDK\Tests\Integration\Fabric;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
@@ -30,7 +30,7 @@ class BatchTest extends TestCase
     #[\Override]
     protected function setUp(): void
     {
-        $this->extraService = Factory::getServiceBuilder()->getCatalogScope()->extra();
+        $this->extraService = Fabric::getServiceBuilder()->getCatalogScope()->extra();
     }
 
     /**
@@ -40,8 +40,8 @@ class BatchTest extends TestCase
     public function testBatchList(): void
     {
         $expectedIds = [];
-        foreach ($this->extraService->list(['id'])->getExtras() as $extra) {
-            $expectedIds[] = $extra->id;
+        foreach ($this->extraService->list(['id'])->getExtras() as $extraItemResult) {
+            $expectedIds[] = $extraItemResult->id;
         }
 
         $actualIds = [];

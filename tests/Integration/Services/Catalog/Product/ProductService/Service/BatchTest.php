@@ -19,7 +19,7 @@ use Bitrix24\SDK\Services\Catalog\Catalog\Service\Catalog;
 use Bitrix24\SDK\Services\Catalog\Product\ProductService\Result\ProductServiceItemResult;
 use Bitrix24\SDK\Services\Catalog\Product\ProductService\Service\Batch;
 use Bitrix24\SDK\Services\Catalog\Product\ProductService\Service\ProductService;
-use Bitrix24\SDK\Tests\Integration\Factory;
+use Bitrix24\SDK\Tests\Integration\Fabric;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
@@ -38,8 +38,8 @@ class BatchTest extends TestCase
     #[\Override]
     protected function setUp(): void
     {
-        $this->productServiceService = Factory::getServiceBuilder()->getCatalogScope()->productService();
-        $this->catalogService = Factory::getServiceBuilder()->getCatalogScope()->catalog();
+        $this->productServiceService = Fabric::getServiceBuilder()->getCatalogScope()->productService();
+        $this->catalogService = Fabric::getServiceBuilder()->getCatalogScope()->catalog();
         $this->iblockId = $this->catalogService->list([], [], [], 0)->getCatalogs()[0]->iblockId;
     }
 

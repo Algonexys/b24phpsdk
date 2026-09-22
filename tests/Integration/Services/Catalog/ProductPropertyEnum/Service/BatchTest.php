@@ -18,7 +18,7 @@ use Bitrix24\SDK\Core\Exceptions\TransportException;
 use Bitrix24\SDK\Services\Catalog\ProductPropertyEnum\Result\ProductPropertyEnumItemResult;
 use Bitrix24\SDK\Services\Catalog\ProductPropertyEnum\Service\Batch;
 use Bitrix24\SDK\Services\Catalog\ProductPropertyEnum\Service\ProductPropertyEnum;
-use Bitrix24\SDK\Tests\Integration\Factory;
+use Bitrix24\SDK\Tests\Integration\Fabric;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
@@ -39,12 +39,12 @@ class BatchTest extends TestCase
     #[\Override]
     protected function setUp(): void
     {
-        $this->productPropertyEnumService = Factory::getServiceBuilder()->getCatalogScope()->productPropertyEnum();
+        $this->productPropertyEnumService = Fabric::getServiceBuilder()->getCatalogScope()->productPropertyEnum();
 
-        $catalogService = Factory::getServiceBuilder()->getCatalogScope()->catalog();
+        $catalogService = Fabric::getServiceBuilder()->getCatalogScope()->catalog();
         $iblockId = $catalogService->list([], [], [], 0)->getCatalogs()[0]->iblockId;
 
-        $propertyResponse = Factory::getCore()->call('catalog.productProperty.add', [
+        $propertyResponse = Fabric::getCore()->call('catalog.productProperty.add', [
             'fields' => [
                 'iblockId' => $iblockId,
                 'name' => sprintf('sdk batch list property %s', time()),
@@ -67,7 +67,7 @@ class BatchTest extends TestCase
         }
 
         $this->enumIds = [];
-        Factory::getCore()->call('catalog.productProperty.delete', ['id' => $this->propertyId]);
+        Fabric::getCore()->call('catalog.productProperty.delete', ['id' => $this->propertyId]);
     }
 
     /**
@@ -123,14 +123,14 @@ class BatchTest extends TestCase
      */
     public function testBatchUpdate(): void
     {
-        $addResult = $this->productPropertyEnumService->add([
+        $productPropertyEnumResult = $this->productPropertyEnumService->add([
             'propertyId' => $this->propertyId,
             'value' => sprintf('sdk batch value %s', time()),
             'xmlId' => sprintf('sdk-batch-xml-id-%s', time()),
             'def' => 'N',
             'sort' => 100,
         ]);
-        $enumId = $addResult->productPropertyEnum()->id;
+        $enumId = $productPropertyEnumResult->productPropertyEnum()->id;
         $this->enumIds[] = $enumId;
 
         $updatedValue = sprintf('sdk batch value updated %s', time());
@@ -139,7 +139,7 @@ class BatchTest extends TestCase
                 'fields' => [
                     'propertyId' => $this->propertyId,
                     'value' => $updatedValue,
-                    'xmlId' => $addResult->productPropertyEnum()->xmlId,
+                    'xmlId' => $productPropertyEnumResult->productPropertyEnum()->xmlId,
                     'def' => 'N',
                     'sort' => 200,
                 ],

@@ -18,7 +18,7 @@ use Bitrix24\SDK\Core\Exceptions\TransportException;
 use Bitrix24\SDK\Services\Catalog\Catalog\Result\CatalogItemResult;
 use Bitrix24\SDK\Services\Catalog\Catalog\Service\Batch;
 use Bitrix24\SDK\Services\Catalog\Catalog\Service\Catalog;
-use Bitrix24\SDK\Tests\Integration\Factory;
+use Bitrix24\SDK\Tests\Integration\Fabric;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
@@ -30,7 +30,7 @@ class BatchTest extends TestCase
     #[\Override]
     protected function setUp(): void
     {
-        $this->catalogService = Factory::getServiceBuilder()->getCatalogScope()->catalog();
+        $this->catalogService = Fabric::getServiceBuilder()->getCatalogScope()->catalog();
     }
 
     /**
@@ -40,8 +40,8 @@ class BatchTest extends TestCase
     public function testBatchList(): void
     {
         $expectedIds = [];
-        foreach ($this->catalogService->list(['id'], [], ['id' => 'ASC'], 0)->getCatalogs() as $catalog) {
-            $expectedIds[] = $catalog->id;
+        foreach ($this->catalogService->list(['id'], [], ['id' => 'ASC'], 0)->getCatalogs() as $catalogItemResult) {
+            $expectedIds[] = $catalogItemResult->id;
         }
 
         self::assertNotEmpty($expectedIds, 'portal has no commercial catalogs');
