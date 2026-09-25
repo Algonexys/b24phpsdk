@@ -162,7 +162,8 @@ trait CustomBitrix24Assertions
                 case 'integer':
                 case 'int':
                 case 'mail_message':
-                    if ($fieldCode === 'type') {
+                    // catalog product type, other scopes (e.g. sale basket item) use own integer codes
+                    if ($fieldCode === 'type' && str_starts_with($resultItemClassName, 'Bitrix24\SDK\Services\Catalog\\')) {
                         $this->assertTrue(
                             str_contains($propsFromAnnotations[$fieldCode], ProductType::class),
                             sprintf(
