@@ -41,7 +41,6 @@ trait BatchCoreStubTrait
     private function makeCore(callable $resultProvider, ?int $total = null): CoreInterface
     {
         $core = $this->createStub(CoreInterface::class);
-        $core->method('getAuthConnector')->willReturn(null);
         $core->method('call')->willReturnCallback(
             function (string $apiMethod, array $parameters = []) use ($resultProvider, $total): Response {
                 if ($apiMethod === 'batch') {
