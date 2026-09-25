@@ -18,7 +18,7 @@ use Bitrix24\SDK\Core\Exceptions\TransportException;
 use Bitrix24\SDK\Services\Sale\Property\Service\Batch;
 use Bitrix24\SDK\Services\Sale\Property\Service\Property;
 use Bitrix24\SDK\Services\Sale\SaleServiceBuilder;
-use Bitrix24\SDK\Tests\Integration\Factory;
+use Bitrix24\SDK\Tests\Integration\Fabric;
 use Bitrix24\SDK\Tests\Integration\Services\Sale\SaleBatchFixturesTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\TestDox;
@@ -47,7 +47,7 @@ class BatchTest extends TestCase
     #[\Override]
     protected function setUp(): void
     {
-        $this->saleServiceBuilder = Factory::getServiceBuilder()->getSaleScope();
+        $this->saleServiceBuilder = Fabric::getServiceBuilder()->getSaleScope();
         $this->propertyService = $this->saleServiceBuilder->property();
         $this->personTypeId = $this->createPersonType();
         $this->propertyGroupId = $this->createPropertyGroup($this->personTypeId);

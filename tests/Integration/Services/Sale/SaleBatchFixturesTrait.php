@@ -15,7 +15,7 @@ namespace Bitrix24\SDK\Tests\Integration\Services\Sale;
 
 use Bitrix24\SDK\Core\Exceptions\BaseException;
 use Bitrix24\SDK\Core\Exceptions\TransportException;
-use Bitrix24\SDK\Tests\Integration\Factory;
+use Bitrix24\SDK\Tests\Integration\Fabric;
 
 /**
  * Shared fixtures for integration tests of Sale batch services
@@ -28,7 +28,7 @@ trait SaleBatchFixturesTrait
      */
     protected function createPersonType(): int
     {
-        return Factory::getServiceBuilder()->getSaleScope()->personType()->add([
+        return Fabric::getServiceBuilder()->getSaleScope()->personType()->add([
             'name' => 'Test Person Type for batch ' . uniqid(),
             'sort' => 100,
         ])->getId();
@@ -40,7 +40,7 @@ trait SaleBatchFixturesTrait
      */
     protected function createOrder(int $personTypeId): int
     {
-        return Factory::getServiceBuilder()->getSaleScope()->order()->add([
+        return Fabric::getServiceBuilder()->getSaleScope()->order()->add([
             'lid' => 's1',
             'personTypeId' => $personTypeId,
             'currency' => 'USD',
@@ -54,7 +54,7 @@ trait SaleBatchFixturesTrait
      */
     protected function createBasketItem(int $orderId): int
     {
-        return Factory::getServiceBuilder()->getSaleScope()->basketItem()->add([
+        return Fabric::getServiceBuilder()->getSaleScope()->basketItem()->add([
             'orderId' => $orderId,
             'productId' => 0,
             'price' => 50.00,
@@ -70,7 +70,7 @@ trait SaleBatchFixturesTrait
      */
     protected function createPayment(int $orderId, int $paySystemId): int
     {
-        return Factory::getServiceBuilder()->getSaleScope()->payment()->add([
+        return Fabric::getServiceBuilder()->getSaleScope()->payment()->add([
             'orderId' => $orderId,
             'paySystemId' => $paySystemId,
             'sum' => 10.00,
@@ -84,7 +84,7 @@ trait SaleBatchFixturesTrait
      */
     protected function createShipment(int $orderId, int $deliveryId): int
     {
-        return Factory::getServiceBuilder()->getSaleScope()->shipment()->add([
+        return Fabric::getServiceBuilder()->getSaleScope()->shipment()->add([
             'orderId' => $orderId,
             'allowDelivery' => 'Y',
             'deducted' => 'N',
@@ -98,7 +98,7 @@ trait SaleBatchFixturesTrait
      */
     protected function createPropertyGroup(int $personTypeId): int
     {
-        return Factory::getServiceBuilder()->getSaleScope()->propertyGroup()->add([
+        return Fabric::getServiceBuilder()->getSaleScope()->propertyGroup()->add([
             'personTypeId' => $personTypeId,
             'name' => 'Test Property Group for batch ' . uniqid(),
             'sort' => 100,
@@ -111,7 +111,7 @@ trait SaleBatchFixturesTrait
      */
     protected function createProperty(int $personTypeId, int $propertyGroupId, string $type = 'STRING'): int
     {
-        return Factory::getServiceBuilder()->getSaleScope()->property()->add([
+        return Fabric::getServiceBuilder()->getSaleScope()->property()->add([
             'personTypeId' => $personTypeId,
             'propsGroupId' => $propertyGroupId,
             'name' => 'Test Property for batch ' . uniqid(),
@@ -161,7 +161,7 @@ trait SaleBatchFixturesTrait
      */
     protected function createDeliveryHandler(string $code): int
     {
-        return Factory::getServiceBuilder()->getSaleScope()->deliveryHandler()->add(
+        return Fabric::getServiceBuilder()->getSaleScope()->deliveryHandler()->add(
             $this->getDeliveryHandlerFields($code)
         )->getId();
     }
@@ -174,7 +174,7 @@ trait SaleBatchFixturesTrait
      */
     protected function getDeliveryHandlerCode(int $handlerId): string
     {
-        foreach (Factory::getServiceBuilder()->getSaleScope()->deliveryHandler()->list()->getDeliveryHandlers() as $handler) {
+        foreach (Fabric::getServiceBuilder()->getSaleScope()->deliveryHandler()->list()->getDeliveryHandlers() as $handler) {
             if ((int)$handler->ID === $handlerId) {
                 return (string)$handler->CODE;
             }
@@ -210,7 +210,7 @@ trait SaleBatchFixturesTrait
      */
     protected function createDelivery(string $handlerCode): int
     {
-        return Factory::getServiceBuilder()->getSaleScope()->delivery()->add(
+        return Fabric::getServiceBuilder()->getSaleScope()->delivery()->add(
             $this->getDeliveryFields($handlerCode)
         )->getId();
     }
@@ -221,7 +221,7 @@ trait SaleBatchFixturesTrait
      */
     protected function getActivePaySystemId(): int
     {
-        $paySystems = Factory::getCore()->call('sale.paysystem.list', [
+        $paySystems = Fabric::getCore()->call('sale.paysystem.list', [
             'select' => ['ID'],
             'filter' => ['ACTIVE' => 'Y'],
             'order' => ['ID' => 'ASC'],
@@ -240,7 +240,7 @@ trait SaleBatchFixturesTrait
      */
     protected function getActiveDeliveryId(): int
     {
-        $deliveries = Factory::getCore()->call('sale.delivery.getlist', [
+        $deliveries = Fabric::getCore()->call('sale.delivery.getlist', [
             'SELECT' => ['ID'],
             'FILTER' => ['ACTIVE' => 'Y'],
             'ORDER' => ['ID' => 'ASC'],

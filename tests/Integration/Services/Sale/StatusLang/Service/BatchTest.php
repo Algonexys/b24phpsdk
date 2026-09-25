@@ -18,7 +18,7 @@ use Bitrix24\SDK\Core\Exceptions\TransportException;
 use Bitrix24\SDK\Services\Sale\Status\Service\Status;
 use Bitrix24\SDK\Services\Sale\StatusLang\Service\Batch;
 use Bitrix24\SDK\Services\Sale\StatusLang\Service\StatusLang;
-use Bitrix24\SDK\Tests\Integration\Factory;
+use Bitrix24\SDK\Tests\Integration\Fabric;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
@@ -47,7 +47,7 @@ class BatchTest extends TestCase
     #[\Override]
     protected function setUp(): void
     {
-        $saleServiceBuilder = Factory::getServiceBuilder()->getSaleScope();
+        $saleServiceBuilder = Fabric::getServiceBuilder()->getSaleScope();
         $this->statusLangService = $saleServiceBuilder->statusLang();
         $this->statusService = $saleServiceBuilder->status();
 

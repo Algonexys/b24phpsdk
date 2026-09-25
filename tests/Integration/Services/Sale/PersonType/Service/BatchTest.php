@@ -17,7 +17,7 @@ use Bitrix24\SDK\Core\Exceptions\BaseException;
 use Bitrix24\SDK\Core\Exceptions\TransportException;
 use Bitrix24\SDK\Services\Sale\PersonType\Service\Batch;
 use Bitrix24\SDK\Services\Sale\PersonType\Service\PersonType;
-use Bitrix24\SDK\Tests\Integration\Factory;
+use Bitrix24\SDK\Tests\Integration\Fabric;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
@@ -33,7 +33,7 @@ class BatchTest extends TestCase
     #[\Override]
     protected function setUp(): void
     {
-        $this->personTypeService = Factory::getServiceBuilder()->getSaleScope()->personType();
+        $this->personTypeService = Fabric::getServiceBuilder()->getSaleScope()->personType();
     }
 
     /**

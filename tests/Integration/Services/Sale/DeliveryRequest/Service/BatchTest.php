@@ -18,7 +18,7 @@ use Bitrix24\SDK\Core\Exceptions\TransportException;
 use Bitrix24\SDK\Services\Sale\DeliveryRequest\Service\Batch;
 use Bitrix24\SDK\Services\Sale\DeliveryRequest\Service\DeliveryRequest;
 use Bitrix24\SDK\Services\Sale\SaleServiceBuilder;
-use Bitrix24\SDK\Tests\Integration\Factory;
+use Bitrix24\SDK\Tests\Integration\Fabric;
 use Bitrix24\SDK\Tests\Integration\Services\Sale\SaleBatchFixturesTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\TestDox;
@@ -50,7 +50,7 @@ class BatchTest extends TestCase
     #[\Override]
     protected function setUp(): void
     {
-        $this->saleServiceBuilder = Factory::getServiceBuilder()->getSaleScope();
+        $this->saleServiceBuilder = Fabric::getServiceBuilder()->getSaleScope();
         $this->deliveryRequestService = $this->saleServiceBuilder->deliveryRequest();
         $this->handlerId = $this->createDeliveryHandler('batch_delivery_handler_' . uniqid());
         $this->deliveryId = $this->createDelivery($this->getDeliveryHandlerCode($this->handlerId));

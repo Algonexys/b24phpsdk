@@ -17,7 +17,7 @@ use Bitrix24\SDK\Core\Exceptions\BaseException;
 use Bitrix24\SDK\Core\Exceptions\TransportException;
 use Bitrix24\SDK\Services\Sale\Status\Service\Batch;
 use Bitrix24\SDK\Services\Sale\Status\Service\Status;
-use Bitrix24\SDK\Tests\Integration\Factory;
+use Bitrix24\SDK\Tests\Integration\Fabric;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
@@ -42,7 +42,7 @@ class BatchTest extends TestCase
     #[\Override]
     protected function setUp(): void
     {
-        $this->statusService = Factory::getServiceBuilder()->getSaleScope()->status();
+        $this->statusService = Fabric::getServiceBuilder()->getSaleScope()->status();
 
         // status identifier is limited to 2 characters, choose free identifiers
         $existingIds = [];
@@ -51,7 +51,7 @@ class BatchTest extends TestCase
         }
 
         // sale.status.delete does not delete status localizations, so skip identifiers with localizations left
-        $statusLangService = Factory::getServiceBuilder()->getSaleScope()->statusLang();
+        $statusLangService = Fabric::getServiceBuilder()->getSaleScope()->statusLang();
         foreach (range('A', 'Z') as $letter) {
             $candidateId = 'Q' . $letter;
             if (!in_array($candidateId, $existingIds, true)
@@ -72,7 +72,7 @@ class BatchTest extends TestCase
     #[\Override]
     protected function tearDown(): void
     {
-        $statusLangService = Factory::getServiceBuilder()->getSaleScope()->statusLang();
+        $statusLangService = Fabric::getServiceBuilder()->getSaleScope()->statusLang();
         foreach ($this->statusIds as $statusId) {
             try {
                 $statusLangService->deleteByFilter(['statusId' => $statusId, 'lid' => 'en', 'name' => 'Batch status ' . $statusId]);

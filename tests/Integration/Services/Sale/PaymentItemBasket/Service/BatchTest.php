@@ -18,7 +18,7 @@ use Bitrix24\SDK\Core\Exceptions\TransportException;
 use Bitrix24\SDK\Services\Sale\PaymentItemBasket\Service\Batch;
 use Bitrix24\SDK\Services\Sale\PaymentItemBasket\Service\PaymentItemBasket;
 use Bitrix24\SDK\Services\Sale\SaleServiceBuilder;
-use Bitrix24\SDK\Tests\Integration\Factory;
+use Bitrix24\SDK\Tests\Integration\Fabric;
 use Bitrix24\SDK\Tests\Integration\Services\Sale\SaleBatchFixturesTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\TestDox;
@@ -54,7 +54,7 @@ class BatchTest extends TestCase
     #[\Override]
     protected function setUp(): void
     {
-        $this->saleServiceBuilder = Factory::getServiceBuilder()->getSaleScope();
+        $this->saleServiceBuilder = Fabric::getServiceBuilder()->getSaleScope();
         $this->paymentItemBasketService = $this->saleServiceBuilder->paymentItemBasket();
 
         $paySystemId = $this->getActivePaySystemId();

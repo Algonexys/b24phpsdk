@@ -18,7 +18,7 @@ use Bitrix24\SDK\Core\Exceptions\TransportException;
 use Bitrix24\SDK\Services\Sale\TradePlatform\Result\TradePlatformItemResult;
 use Bitrix24\SDK\Services\Sale\TradePlatform\Service\Batch;
 use Bitrix24\SDK\Services\Sale\TradePlatform\Service\TradePlatform;
-use Bitrix24\SDK\Tests\Integration\Factory;
+use Bitrix24\SDK\Tests\Integration\Fabric;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
@@ -32,7 +32,7 @@ class BatchTest extends TestCase
     #[\Override]
     protected function setUp(): void
     {
-        $this->tradePlatformService = Factory::getServiceBuilder()->getSaleScope()->tradePlatform();
+        $this->tradePlatformService = Fabric::getServiceBuilder()->getSaleScope()->tradePlatform();
     }
 
     /**
