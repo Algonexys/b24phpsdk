@@ -87,10 +87,10 @@ class Batch
     )]
     public function add(array $statuses): Generator
     {
-        $items = [];
-        foreach ($statuses as $status) {
-            $items[] = ['fields' => $status];
-        }
+        $items = array_map(
+            static fn (array $status): array => ['fields' => $status],
+            $statuses
+        );
 
         foreach ($this->batch->addEntityItems('sale.status.add', $items) as $key => $item) {
             yield $key => new StatusAddBatchResult($item);

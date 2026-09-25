@@ -174,9 +174,9 @@ trait SaleBatchFixturesTrait
      */
     protected function getDeliveryHandlerCode(int $handlerId): string
     {
-        foreach (Fabric::getServiceBuilder()->getSaleScope()->deliveryHandler()->list()->getDeliveryHandlers() as $handler) {
-            if ((int)$handler->ID === $handlerId) {
-                return (string)$handler->CODE;
+        foreach (Fabric::getServiceBuilder()->getSaleScope()->deliveryHandler()->list()->getDeliveryHandlers() as $deliveryHandlerItemResult) {
+            if ((int)$deliveryHandlerItemResult->ID === $handlerId) {
+                return (string)$deliveryHandlerItemResult->CODE;
             }
         }
 

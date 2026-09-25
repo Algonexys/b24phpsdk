@@ -69,13 +69,13 @@ class BatchTest extends TestCase
     #[\Override]
     protected function tearDown(): void
     {
-        $this->cleanup(fn () => $this->saleServiceBuilder->payment()->delete($this->paymentId));
+        $this->cleanup(fn (): \Bitrix24\SDK\Core\Result\DeletedItemResult => $this->saleServiceBuilder->payment()->delete($this->paymentId));
         foreach ($this->basketItemIds as $basketItemId) {
-            $this->cleanup(fn () => $this->saleServiceBuilder->basketItem()->delete($basketItemId));
+            $this->cleanup(fn (): \Bitrix24\SDK\Core\Result\DeletedItemResult => $this->saleServiceBuilder->basketItem()->delete($basketItemId));
         }
 
-        $this->cleanup(fn () => $this->saleServiceBuilder->order()->delete($this->orderId));
-        $this->cleanup(fn () => $this->saleServiceBuilder->personType()->delete($this->personTypeId));
+        $this->cleanup(fn (): \Bitrix24\SDK\Core\Result\DeletedItemResult => $this->saleServiceBuilder->order()->delete($this->orderId));
+        $this->cleanup(fn (): \Bitrix24\SDK\Core\Result\DeletedItemResult => $this->saleServiceBuilder->personType()->delete($this->personTypeId));
     }
 
     /**
@@ -115,9 +115,9 @@ class BatchTest extends TestCase
             $listed[(int)$item->id] = (float)$item->quantity;
         }
 
-        foreach ($addedIds as $id) {
-            $this->assertArrayHasKey($id, $listed);
-            $this->assertSame(2.0, $listed[$id]);
+        foreach ($addedIds as $addedId) {
+            $this->assertArrayHasKey($addedId, $listed);
+            $this->assertSame(2.0, $listed[$addedId]);
         }
 
         $deletedCount = 0;

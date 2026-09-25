@@ -85,10 +85,10 @@ class Batch
     )]
     public function add(array $statusLangs): Generator
     {
-        $items = [];
-        foreach ($statusLangs as $statusLang) {
-            $items[] = ['fields' => $statusLang];
-        }
+        $items = array_map(
+            static fn (array $statusLang): array => ['fields' => $statusLang],
+            $statusLangs
+        );
 
         foreach ($this->batch->addEntityItems('sale.statusLang.add', $items) as $key => $item) {
             yield $key => new StatusLangAddBatchResult($item);

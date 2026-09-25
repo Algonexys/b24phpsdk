@@ -79,14 +79,14 @@ class BatchTest extends TestCase
     #[\Override]
     protected function tearDown(): void
     {
-        $this->cleanup(fn () => $this->saleServiceBuilder->shipment()->delete($this->shipmentId));
-        $this->cleanup(fn () => $this->saleServiceBuilder->order()->delete($this->orderId));
+        $this->cleanup(fn (): \Bitrix24\SDK\Core\Result\DeletedItemResult => $this->saleServiceBuilder->shipment()->delete($this->shipmentId));
+        $this->cleanup(fn (): \Bitrix24\SDK\Core\Result\DeletedItemResult => $this->saleServiceBuilder->order()->delete($this->orderId));
         foreach ($this->shipmentPropertyIds as $shipmentPropertyId) {
-            $this->cleanup(fn () => $this->saleServiceBuilder->shipmentProperty()->delete($shipmentPropertyId));
+            $this->cleanup(fn (): \Bitrix24\SDK\Core\Result\DeletedItemResult => $this->saleServiceBuilder->shipmentProperty()->delete($shipmentPropertyId));
         }
 
-        $this->cleanup(fn () => $this->saleServiceBuilder->propertyGroup()->delete($this->propertyGroupId));
-        $this->cleanup(fn () => $this->saleServiceBuilder->personType()->delete($this->personTypeId));
+        $this->cleanup(fn (): \Bitrix24\SDK\Core\Result\DeletedItemResult => $this->saleServiceBuilder->propertyGroup()->delete($this->propertyGroupId));
+        $this->cleanup(fn (): \Bitrix24\SDK\Core\Result\DeletedItemResult => $this->saleServiceBuilder->personType()->delete($this->personTypeId));
     }
 
     /**

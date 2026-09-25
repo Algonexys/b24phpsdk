@@ -116,8 +116,8 @@ class BatchTest extends TestCase
         }
 
         $this->assertCount(self::ITEMS_COUNT, $listed);
-        foreach ($addedIds as $id) {
-            $this->assertSame('Updated ' . $id, $listed[$id]);
+        foreach ($addedIds as $addedId) {
+            $this->assertSame('Updated ' . $addedId, $listed[$addedId]);
         }
 
         $deletedCount = 0;

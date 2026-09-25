@@ -56,8 +56,8 @@ class BatchTest extends TestCase
     protected function tearDown(): void
     {
         foreach ($this->domains as $personTypeId => $domain) {
-            $this->cleanup(fn () => $this->personTypeStatusService->delete($personTypeId, $domain));
-            $this->cleanup(fn () => $this->saleServiceBuilder->personType()->delete($personTypeId));
+            $this->cleanup(fn (): \Bitrix24\SDK\Core\Result\DeletedItemResult => $this->personTypeStatusService->delete($personTypeId, $domain));
+            $this->cleanup(fn (): \Bitrix24\SDK\Core\Result\DeletedItemResult => $this->saleServiceBuilder->personType()->delete($personTypeId));
         }
     }
 

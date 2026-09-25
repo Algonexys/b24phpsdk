@@ -62,10 +62,10 @@ class BatchTest extends TestCase
     protected function tearDown(): void
     {
         foreach ($this->deliveryIds as $deliveryId) {
-            $this->cleanup(fn () => $this->saleServiceBuilder->delivery()->delete($deliveryId));
+            $this->cleanup(fn (): \Bitrix24\SDK\Core\Result\DeletedItemResult => $this->saleServiceBuilder->delivery()->delete($deliveryId));
         }
 
-        $this->cleanup(fn () => $this->saleServiceBuilder->deliveryHandler()->delete($this->handlerId));
+        $this->cleanup(fn (): \Bitrix24\SDK\Core\Result\DeletedItemResult => $this->saleServiceBuilder->deliveryHandler()->delete($this->handlerId));
     }
 
     /**
@@ -115,8 +115,8 @@ class BatchTest extends TestCase
         }
 
         $this->assertCount(self::ITEMS_COUNT, $listed);
-        foreach ($addedIds as $id) {
-            $this->assertSame('Updated ' . $id, $listed[$id]);
+        foreach ($addedIds as $addedId) {
+            $this->assertSame('Updated ' . $addedId, $listed[$addedId]);
         }
 
         $deletedCount = 0;

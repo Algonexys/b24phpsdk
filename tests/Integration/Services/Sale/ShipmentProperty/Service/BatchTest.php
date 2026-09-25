@@ -56,8 +56,8 @@ class BatchTest extends TestCase
     #[\Override]
     protected function tearDown(): void
     {
-        $this->cleanup(fn () => $this->saleServiceBuilder->propertyGroup()->delete($this->propertyGroupId));
-        $this->cleanup(fn () => $this->saleServiceBuilder->personType()->delete($this->personTypeId));
+        $this->cleanup(fn (): \Bitrix24\SDK\Core\Result\DeletedItemResult => $this->saleServiceBuilder->propertyGroup()->delete($this->propertyGroupId));
+        $this->cleanup(fn (): \Bitrix24\SDK\Core\Result\DeletedItemResult => $this->saleServiceBuilder->personType()->delete($this->personTypeId));
     }
 
     /**
@@ -100,9 +100,9 @@ class BatchTest extends TestCase
             $listed[(int)$item->id] = $item->name;
         }
 
-        foreach ($addedIds as $id) {
-            $this->assertArrayHasKey($id, $listed);
-            $this->assertSame('Updated ' . $id, $listed[$id]);
+        foreach ($addedIds as $addedId) {
+            $this->assertArrayHasKey($addedId, $listed);
+            $this->assertSame('Updated ' . $addedId, $listed[$addedId]);
         }
 
         $deletedCount = 0;

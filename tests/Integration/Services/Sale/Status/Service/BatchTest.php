@@ -73,15 +73,16 @@ class BatchTest extends TestCase
     protected function tearDown(): void
     {
         $statusLangService = Fabric::getServiceBuilder()->getSaleScope()->statusLang();
-        foreach ($this->statusIds as $statusId) {
+        $ids = $this->statusIds;
+        foreach ($ids as $id) {
             try {
-                $statusLangService->deleteByFilter(['statusId' => $statusId, 'lid' => 'en', 'name' => 'Batch status ' . $statusId]);
+                $statusLangService->deleteByFilter(['statusId' => $id, 'lid' => 'en', 'name' => 'Batch status ' . $id]);
             } catch (\Throwable) {
                 // localization was not created
             }
 
             try {
-                $this->statusService->delete($statusId);
+                $this->statusService->delete($id);
             } catch (\Throwable) {
                 // status is already deleted by the test
             }
@@ -127,9 +128,9 @@ class BatchTest extends TestCase
             $listed[(string)$item->id] = (int)$item->sort;
         }
 
-        foreach ($addedIds as $statusId) {
-            $this->assertArrayHasKey($statusId, $listed);
-            $this->assertSame(950, $listed[$statusId]);
+        foreach ($addedIds as $addedId) {
+            $this->assertArrayHasKey($addedId, $listed);
+            $this->assertSame(950, $listed[$addedId]);
         }
 
         $deletedCount = 0;

@@ -88,9 +88,9 @@ class BatchTest extends TestCase
             $listed[(int)$item->ID] = $item->NAME;
         }
 
-        foreach ($addedIds as $id) {
-            $this->assertArrayHasKey($id, $listed);
-            $this->assertSame('Updated ' . $id, $listed[$id]);
+        foreach ($addedIds as $addedId) {
+            $this->assertArrayHasKey($addedId, $listed);
+            $this->assertSame('Updated ' . $addedId, $listed[$addedId]);
         }
 
         $deletedCount = 0;
